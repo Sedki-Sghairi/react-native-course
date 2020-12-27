@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, View } from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 export default function App() {
 	const [ text, setText ] = useState('');
@@ -18,45 +20,8 @@ export default function App() {
 	};
 	return (
 		<View>
-			<View style={styles.screen}>
-				<TextInput
-					placeholder="mrigel"
-					style={styles.inputContainer}
-					onChangeText={handleChange}
-					value={text}
-				/>
-				<Button title="Add" onPress={handleClick} />
-			</View>
-			<FlatList
-				data={goals}
-				renderItem={(itemData) => (
-					<View style={styles.listItem}>
-						<Text>{itemData.item.text}</Text>
-					</View>
-				)}
-			/>
+			<GoalInput text={text} handleChange={handleChange} handleClick={handleClick} />
+			<FlatList data={goals} renderItem={(itemData) => <GoalItem itemData={itemData} />} />
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	screen: {
-		padding: 70,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center'
-	},
-	inputContainer: {
-		borderColor: 'grey',
-		borderWidth: 1,
-		width: ' 80%',
-		padding: 4
-	},
-	listItem: {
-		padding: 10,
-		backgroundColor: '#ccc',
-		borderColor: 'black',
-		borderWidth: 1,
-		margin: 10
-	}
-});
